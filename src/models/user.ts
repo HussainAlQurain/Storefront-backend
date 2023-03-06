@@ -1,10 +1,3 @@
-// CREATE TABLE users (
-//     id SERIAL PRIMARY KEY,
-//     first_name varchar(50) NOT NULL,
-//     last_name varchar(50) NOT NULL,
-//     username varchar(30) NOT NULL,
-//     password_digest varchar
-// );
 // @ts-ignore
 import client from "../database";
 
@@ -17,7 +10,7 @@ export type User {
 }
 
 export class UserStore {
-    async indexUser(): Promise<User[]> {
+    async indexUsers(): Promise<User[]> {
         try {
             // @ts-ignore
             const conn = await client.connect();
@@ -74,7 +67,7 @@ export class UserStore {
         try{
             // @ts-ignore
             const conn = await client.connect();
-            const sql = 'DELETE from users where id=($1)';
+            const sql = 'DELETE FROM users WHERE id=($1)';
             const result = await conn.query(sql, [id]);
             conn.release();
             return result.rows[0];
