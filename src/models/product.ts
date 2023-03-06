@@ -1,7 +1,7 @@
 // @ts-ignore
 import client from "../database";
 
-export type Product {
+export type Product = {
     id: number;
     name: string;
     price: number;
