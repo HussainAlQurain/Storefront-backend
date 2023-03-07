@@ -29,4 +29,11 @@ describe('User Model Suite', () => {
         const result = await store.showUser(userId ? userId : 1);
         expect(result.first_name).toEqual('ray');
     });
+    it('Expects store.deleteUser to delete the user', async () => {
+        let users = await store.indexUsers();
+        const userId = users[0].id;
+        const result = await store.deleteUser(userId ? userId : 1);
+        users = await store.indexUsers();
+        expect(users.length).toEqual(0);
+    });
 });
