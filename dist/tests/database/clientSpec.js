@@ -10,5 +10,6 @@ describe('Database Connection', () => {
         // @ts-ignore
         const conn = await database_1.default.connect();
         expect(conn).not.toBeNull();
+        conn.release();
     });
 });

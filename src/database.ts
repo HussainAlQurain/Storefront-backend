@@ -13,7 +13,8 @@ const {
 } = process.env
 
 let client
-console.log(ENV)
+//this is to see if my ENV variable has extra space or not.
+console.log(JSON.stringify(ENV));
 
 if(ENV === 'test') {
   client = new Pool({
@@ -31,6 +32,10 @@ if(ENV === 'dev') {
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
   })
+}
+
+if(ENV !== 'dev' && ENV !== 'test'){
+  throw new Error(`Unknown environment`);
 }
 
 export default client

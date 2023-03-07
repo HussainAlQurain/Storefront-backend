@@ -6,5 +6,6 @@ describe('Database Connection', () => {
     // @ts-ignore
     const conn = await client.connect();
     expect(conn).not.toBeNull();
+    conn.release();
   });  
 });

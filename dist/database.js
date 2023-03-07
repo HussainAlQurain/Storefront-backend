@@ -8,7 +8,8 @@ const pg_1 = require("pg");
 dotenv_1.default.config();
 const { POSTGRES_HOST, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_TEST_DB, ENV, } = process.env;
 let client;
-console.log(ENV);
+//this is to see if my ENV variable has extra space or not.
+console.log(JSON.stringify(ENV));
 if (ENV === 'test') {
     client = new pg_1.Pool({
         host: POSTGRES_HOST,
@@ -25,5 +26,7 @@ if (ENV === 'dev') {
         password: POSTGRES_PASSWORD,
     });
 }
-console.log(client);
+if (ENV !== 'dev' && ENV !== 'test') {
+    throw new Error(`Unknown environment`);
+}
 exports.default = client;
