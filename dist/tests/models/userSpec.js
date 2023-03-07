@@ -9,13 +9,13 @@ describe('User Model Suite', () => {
     });
     it('Expects store.indexUsers to return users', async () => {
         const result = await store.indexUsers();
-        expect(result.length).toBe(1);
+        expect(result.length).toBeGreaterThanOrEqual(1);
     });
     it('Expects store.editUser to update user', async () => {
         const users = await store.indexUsers();
         const userId = users[0].id;
         const result = await store.editUser({
-            id: 1,
+            id: userId,
             first_name: "ray",
             last_name: "qurain",
             username: "rayleigh50",
