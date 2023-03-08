@@ -32,8 +32,9 @@ describe('User Model Suite', () => {
     it('Expects store.deleteUser to delete the user', async () => {
         let users = await store.indexUsers();
         const userId = users[0].id;
+        const length_before = users.length;
         const result = await store.deleteUser(userId ? userId : 1);
         users = await store.indexUsers();
-        expect(users.length).toEqual(0);
+        expect(users.length).toEqual(length_before - 1);
     });
 });

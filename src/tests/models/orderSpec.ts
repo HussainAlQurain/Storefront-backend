@@ -1,10 +1,19 @@
 import { OrderStore } from "../../models/order";
+import { UserStore } from "../../models/user";
 
 const store = new OrderStore();
-
+const userStore = new UserStore();
+let id = 1;
 describe('Order Model Suite', () => {
+    beforeAll(async () => {
+        const result = await userStore.createUser({first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4'});
+        id = result.id ? result.id : 1;
+    })
+    afterAll(async () => {
+        const result = await userStore.deleteUser(id);
+    })
     it('Expects store.createOrder(o) to create a new Order', async () => {
-        const result = await store.createOrder({status: 'pending', user_id: 1});
+        const result = await store.createOrder({status: 'pending', user_id: id});
         expect(result.status).toEqual('pending');
     })
     it('Expects store.indexOrders to return orders', async () => {
@@ -17,7 +26,7 @@ describe('Order Model Suite', () => {
         const result = await store.editOrder({
             id: orderId,
             status: "shipped",
-            user_id: 1,
+            user_id: id,
         });
         expect(result.status).toEqual('shipped');
     })
@@ -25,7 +34,7 @@ describe('Order Model Suite', () => {
         const orders = await store.indexOrders();
         const orderId = orders[0].id;
         const result = await store.showOrder(orderId ? orderId : 1);
-        expect(result.user_id).toEqual(1);
+        expect(Number(result.user_id)).toEqual(id);
     })
     it('Expects store.deleteOrder to delete the order', async () => {
         let orders = await store.indexOrders();
