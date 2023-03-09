@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const users_1 = require("../handlers/users");
+const UserRouter = (0, express_1.Router)();
+const Handler = new users_1.UserHandler();
+UserRouter.get('/', Handler.index);
+UserRouter.get('/:id', Handler.show);
+UserRouter.post('/create', Handler.create);
+UserRouter.post('/login', Handler.authenticate);
+UserRouter.put('/:id', Handler.update);
+UserRouter.delete('/:id', Handler.destroy);
+exports.default = UserRouter;

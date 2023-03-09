@@ -52,10 +52,13 @@ class UserStore {
     }
     async editUser(u) {
         try {
+            const pepper = process.env.BCRYPT_PASSWORD;
+            const saltRounds = process.env.SALT_ROUNDS;
             // @ts-ignore
             const conn = await database_1.default.connect();
             const sql = 'UPDATE users SET first_name = ($2), last_name = ($3), username = ($4), password_digest = ($5) WHERE id = ($1) RETURNING *';
-            const result = await conn.query(sql, [u.id, u.first_name, u.last_name, u.username, u.password_digest]);
+            const hash = bcrypt_1.default.hashSync(u.password_digest + pepper, parseInt(saltRounds));
+            const result = await conn.query(sql, [u.id, u.first_name, u.last_name, u.username, hash]);
             conn.release();
             return result.rows[0];
         }
@@ -75,6 +78,19 @@ class UserStore {
         catch (err) {
             throw new Error(`Could not delete user: ${err}`);
         }
+    }
+    async authenticate(username, password) {
+        // @ts-ignore
+        const conn = await database_1.default.connect();
+        const sql = 'SELECT password_digest FROM users where username=($1)';
+        const result = await conn.query(sql, [username]);
+        if (result.rows.length) {
+            const user = result.rows[0];
+            if (bcrypt_1.default.compareSync(password + process.env.BCRYPT_PASSWORD, user.password_digest)) {
+                return user;
+            }
+        }
+        return null;
     }
 }
 exports.UserStore = UserStore;

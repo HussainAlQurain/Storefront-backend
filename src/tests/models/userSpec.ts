@@ -29,6 +29,13 @@ describe('User Model Suite', () => {
         const result = await store.showUser(userId ? userId : 1);
         expect(result.first_name).toEqual('ray');
     })
+    it('Expects store.authenticate to return user', async () => {
+        const users = await store.indexUsers();
+        const pass = users[0].password_digest;
+        const result = await store.authenticate('rayleigh50', 'test1233')
+        console.log(users[0]);
+        expect(result?.password_digest).toEqual(pass);
+    })
     it('Expects store.deleteUser to delete the user', async () => {
         let users = await store.indexUsers();
         const userId = users[0].id;
