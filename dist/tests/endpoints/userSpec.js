@@ -27,7 +27,7 @@ describe('User Routes Suite', () => {
     it('api/users should return all users', () => {
         request.get('api/users').expect(200);
     });
-    it('api/users/:id should return user', () => {
+    it('api/users/:id should return the user', () => {
         request.get('api/users/1').expect(200);
     });
     it('api/users/:id should edit the user', () => {

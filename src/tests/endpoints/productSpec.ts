@@ -15,7 +15,7 @@ describe('Product Routes Suite', () => {
     it('api/products should return all products', () => {
         request.get('api/products').expect(200);
     })
-    it('api/products/:id should return products', () => {
+    it('api/products/:id should return the product', () => {
         request.get('api/products/1').expect(200);
     })
     it('api/products/:id should edit the products', () => {
@@ -25,7 +25,7 @@ describe('Product Routes Suite', () => {
         }
         request.put('/api/products/1').send(test).expect(200);
     })
-    it('api/products/:id should delete the products', () => {
+    it('api/products/:id should delete the product', () => {
         request.delete('/api/products/1').expect(200);
     })
 })
