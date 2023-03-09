@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserStore = void 0;
 // @ts-ignore
 const database_1 = __importDefault(require("../database"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class UserStore {
     async indexUsers() {
         try {
@@ -35,10 +36,13 @@ class UserStore {
     }
     async createUser(u) {
         try {
+            const pepper = process.env.BCRYPT_PASSWORD;
+            const saltRounds = process.env.SALT_ROUNDS;
             // @ts-ignore
             const conn = await database_1.default.connect();
             const sql = 'INSERT INTO users (first_name, last_name, username, password_digest) VALUES ($1, $2, $3, $4) RETURNING *';
-            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, u.password_digest]);
+            const hash = bcrypt_1.default.hashSync(u.password_digest + pepper, parseInt(saltRounds));
+            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, hash]);
             conn.release();
             return result.rows[0];
         }

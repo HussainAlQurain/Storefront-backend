@@ -1,6 +1,6 @@
 // @ts-ignore
 import client from "../database";
-
+import bcrypt from "bcrypt";
 export type User = {
     id?: number;
     first_name: string;
@@ -39,10 +39,16 @@ export class UserStore {
     }
     async createUser(u: User): Promise<User> {
         try {
+            const pepper: string = process.env.BCRYPT_PASSWORD as string;
+            const saltRounds: string = process.env.SALT_ROUNDS as string;
             // @ts-ignore
             const conn = await client.connect();
             const sql = 'INSERT INTO users (first_name, last_name, username, password_digest) VALUES ($1, $2, $3, $4) RETURNING *';
-            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, u.password_digest]);
+            const hash = bcrypt.hashSync(
+                u.password_digest + pepper, 
+                parseInt(saltRounds)
+             );
+            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, hash]);
             conn.release();
             return result.rows[0];
         }
