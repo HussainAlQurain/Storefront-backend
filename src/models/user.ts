@@ -82,5 +82,20 @@ export class UserStore {
             throw new Error(`Could not delete user: ${err}`);
         }
     }
+    async authenticate(username: string, password: string): Promise<User|null> {
+        // @ts-ignore
+        const conn = await client.connect();
+        const sql = 'SELECT password_digest FROM users where username=($1)';
+        const result = await conn.query(sql, [username]);
+        
+        if(result.rows.length) {
+            const user = result.rows[0];
+
+            if(bcrypt.compareSync(password+process.env.BCRYPT_PASSWORD, user.password_digest)){
+                return user
+            }
+        }
+        return null
+    }
 
 }
