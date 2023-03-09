@@ -8,12 +8,12 @@ export type Order = {
 }
 
 export class OrderStore {
-    async indexOrders(): Promise<Order[]> {
+    async indexOrders(userId: number): Promise<Order[]> {
         try {
             // @ts-ignore
             const conn = await client.connect();
-            const sql = 'SELECT * FROM orders';
-            const result = await conn.query(sql);
+            const sql = 'SELECT * FROM orders WHERE user_id=($1)';
+            const result = await conn.query(sql, [userId]);
             conn.release();
             return result.rows;
         }
@@ -21,12 +21,12 @@ export class OrderStore {
             throw new Error(`Could not get orders: ${err}`);
         }
     }
-    async showOrder(id: number): Promise<Order> {
+    async showOrder(userId: number): Promise<Order> {
         try {
             // @ts-ignore
             const conn = await client.connect();
-            const sql = 'SELECT * FROM orders where id=($1)';
-            const result = await conn.query(sql, [id]);
+            const sql = 'SELECT * FROM orders WHERE user_id=($1) ORDER BY id LIMIT 1';
+            const result = await conn.query(sql, [userId]);
             conn.release();
             return result.rows[0];
 

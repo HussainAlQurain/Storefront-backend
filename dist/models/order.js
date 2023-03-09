@@ -7,12 +7,12 @@ exports.OrderStore = void 0;
 // @ts-ignore
 const database_1 = __importDefault(require("../database"));
 class OrderStore {
-    async indexOrders() {
+    async indexOrders(userId) {
         try {
             // @ts-ignore
             const conn = await database_1.default.connect();
-            const sql = 'SELECT * FROM orders';
-            const result = await conn.query(sql);
+            const sql = 'SELECT * FROM orders WHERE user_id=($1)';
+            const result = await conn.query(sql, [userId]);
             conn.release();
             return result.rows;
         }
@@ -20,12 +20,12 @@ class OrderStore {
             throw new Error(`Could not get orders: ${err}`);
         }
     }
-    async showOrder(id) {
+    async showOrder(userId) {
         try {
             // @ts-ignore
             const conn = await database_1.default.connect();
-            const sql = 'SELECT * FROM orders where id=($1)';
-            const result = await conn.query(sql, [id]);
+            const sql = 'SELECT * FROM orders WHERE user_id=($1) ORDER BY id LIMIT 1';
+            const result = await conn.query(sql, [userId]);
             conn.release();
             return result.rows[0];
         }

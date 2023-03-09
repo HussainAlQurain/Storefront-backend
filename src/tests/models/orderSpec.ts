@@ -13,34 +13,34 @@ describe('Order Model Suite', () => {
         const result = await userStore.deleteUser(id);
     })
     it('Expects store.createOrder(o) to create a new Order', async () => {
-        const result = await store.createOrder({status: 'pending', user_id: id});
-        expect(result.status).toEqual('pending');
+        const result = await store.createOrder({status: 'active', user_id: id});
+        expect(result.status).toEqual('active');
     })
     it('Expects store.indexOrders to return orders', async () => {
-        const result = await store.indexOrders();
+        const result = await store.indexOrders(id);
         expect(result.length).toBe(1);
     })
     it('Expects store.editOrder to update order', async () => {
-        const orders = await store.indexOrders();
+        const orders = await store.indexOrders(id);
         const orderId = orders[0].id;
         const result = await store.editOrder({
             id: orderId,
-            status: "shipped",
+            status: "complete",
             user_id: id,
         });
-        expect(result.status).toEqual('shipped');
+        expect(result.status).toEqual('complete');
     })
     it('Expects store.showOrder to return order', async () => {
-        const orders = await store.indexOrders();
-        const orderId = orders[0].id;
-        const result = await store.showOrder(orderId ? orderId : 1);
+        const orders = await store.indexOrders(id);
+        const orderUserId = orders[0].user_id;
+        const result = await store.showOrder(orderUserId ? orderUserId : 1);
         expect(Number(result.user_id)).toEqual(id);
     })
     it('Expects store.deleteOrder to delete the order', async () => {
-        let orders = await store.indexOrders();
+        let orders = await store.indexOrders(id);
         const orderId = orders[0].id;
         const result = await store.deleteOrder(orderId ? orderId : 1);
-        orders = await store.indexOrders();
+        orders = await store.indexOrders(id);
         expect(orders.length).toEqual(0);
         
     })
