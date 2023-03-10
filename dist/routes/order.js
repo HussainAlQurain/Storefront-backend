@@ -4,7 +4,7 @@ const express_1 = require("express");
 const order_1 = require("../handlers/order");
 const OrderRouter = (0, express_1.Router)();
 const Handler = new order_1.OrderHandler();
-OrderRouter.get('/user_id', Handler.index);
+OrderRouter.get('/user_id/:user_id', Handler.index);
 OrderRouter.get('/:id', Handler.show);
 OrderRouter.post('/create', Handler.create);
 OrderRouter.put('/:id', Handler.update);
