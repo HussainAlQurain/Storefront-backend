@@ -7,8 +7,9 @@ const supertest_1 = __importDefault(require("supertest"));
 const server_1 = __importDefault(require("../../server"));
 const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
 const resetDb_1 = __importDefault(require("../helpers/resetDb"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const request = (0, supertest_1.default)(server_1.default);
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0VXNlciIsImlhdCI6MTY3ODQ2MzgzOX0.EpXJIqbMgMwvumizAUekjOtGyP7WpP5Agc5ugSRn4c0';
+const token = jsonwebtoken_1.default.sign({ user: 'test' }, process.env.TOKEN_SECRET);
 describe('Product Routes Suite', () => {
     beforeAll(() => {
         (0, initializeDb_1.default)();

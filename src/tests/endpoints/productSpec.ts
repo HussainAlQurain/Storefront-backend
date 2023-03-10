@@ -2,8 +2,11 @@ import supertest from 'supertest'
 import app from '../../server'
 import createTestDb from '../helpers/initializeDb';
 import resetDb from '../helpers/resetDb';
+import jwt from 'jsonwebtoken';
+
 const request = supertest(app)
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0VXNlciIsImlhdCI6MTY3ODQ2MzgzOX0.EpXJIqbMgMwvumizAUekjOtGyP7WpP5Agc5ugSRn4c0'
+const token = jwt.sign({ user: 'test' }, process.env.TOKEN_SECRET as string);
+
 describe('Product Routes Suite', () => {
     beforeAll(() => {
         createTestDb();
