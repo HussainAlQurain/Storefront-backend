@@ -1,6 +1,6 @@
 import { Router, Response, Request } from "express";
 import { User, UserStore } from "../models/user";
-
+import jwt from 'jsonwebtoken'
 
 const store = new UserStore();
 
@@ -34,7 +34,8 @@ export class UserHandler {
             }
             else{
             const user = await store.createUser(req.body);
-            res.status(201).json(user);
+            let token = jwt.sign({ id: user.id, username: user.username}, process.env.TOKEN_SECRET as string);
+            res.status(201).json(token);
             }
         }
         catch (err) {

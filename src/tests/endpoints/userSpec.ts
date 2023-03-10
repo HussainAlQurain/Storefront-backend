@@ -12,7 +12,7 @@ describe('User Routes Suite', () => {
     afterAll(() => {
         resetDb();
     })
-    it('/api/users/create should create a new user with the same attributes', async () => {
+    it('/api/users/create should create a new user and return jwt token', async () => {
         const test = {
             first_name: 'user1',
             last_name: 'user2',
@@ -22,7 +22,8 @@ describe('User Routes Suite', () => {
         const response = await request.post('/api/users/create').send(test);
         delete response.body.password_digest;
         expect(response.status).toBe(201);
-        expect(response.body).toEqual({id: 1, first_name: 'user1', last_name: 'user2', username: 'testUser'});
+        //check for jwt token
+        expect(response.body.split('.').length).toEqual(3);
     })
     it('/api/users/create should return error for not providing password', async () => {
         const test = {
