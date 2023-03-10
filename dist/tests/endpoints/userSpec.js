@@ -8,6 +8,7 @@ const server_1 = __importDefault(require("../../server"));
 const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
 const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const request = (0, supertest_1.default)(server_1.default);
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0VXNlciIsImlhdCI6MTY3ODQ2MzgzOX0.EpXJIqbMgMwvumizAUekjOtGyP7WpP5Agc5ugSRn4c0';
 describe('User Routes Suite', () => {
     beforeAll(() => {
         (0, initializeDb_1.default)();
@@ -39,11 +40,11 @@ describe('User Routes Suite', () => {
         expect(response.body).toEqual('Please Provide a username and password');
     });
     it('/api/users should return all users', async () => {
-        const response = await request.get('/api/users');
+        const response = await request.get('/api/users').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
     it('/api/users/:id should return the user', async () => {
-        const response = await request.get('/api/users/1');
+        const response = await request.get('/api/users/1').set('Authorization', `Bearer ${token}`);
         delete response.body.password_digest;
         expect(response.status).toBe(200);
         expect(response.body).toEqual({ id: 1, first_name: 'user1', last_name: 'user2', username: 'testUser' });
@@ -55,11 +56,11 @@ describe('User Routes Suite', () => {
             username: 'testUser',
             password: '123321'
         };
-        const response = await request.put('/api/users/1').send(test);
+        const response = await request.put('/api/users/1').send(test).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(201);
     });
     it('/api/users/:id should delete the user', async () => {
-        const response = await request.delete('/api/users/1');
+        const response = await request.delete('/api/users/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
 });

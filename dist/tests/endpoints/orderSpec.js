@@ -8,6 +8,7 @@ const server_1 = __importDefault(require("../../server"));
 const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
 const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const request = (0, supertest_1.default)(server_1.default);
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0VXNlciIsImlhdCI6MTY3ODQ2MzgzOX0.EpXJIqbMgMwvumizAUekjOtGyP7WpP5Agc5ugSRn4c0';
 describe('Order Routes Suite', () => {
     beforeAll(async () => {
         (0, initializeDb_1.default)();
@@ -26,16 +27,16 @@ describe('Order Routes Suite', () => {
             status: 'active',
             user_id: 1
         };
-        const response = await request.post('/api/orders/create').send(test);
+        const response = await request.post('/api/orders/create').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
         expect(response.body).toEqual({ id: 1, status: 'active', user_id: '1' });
     });
     it('api/orders should return all orders', async () => {
-        const response = await request.get('/api/orders/user_id/1');
+        const response = await request.get('/api/orders/user_id/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
     it('api/orders/:id should return the order', async () => {
-        const response = await request.get('/api/orders/1');
+        const response = await request.get('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
     it('api/orders/:id should edit the orders', async () => {
@@ -43,11 +44,11 @@ describe('Order Routes Suite', () => {
             status: 'complete',
             user_id: 1,
         };
-        const response = await request.put('/api/orders/1').send(test);
+        const response = await request.put('/api/orders/1').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
     });
     it('api/orders/:id should delete the order', async () => {
-        const response = await request.delete('/api/orders/1');
+        const response = await request.delete('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
 });

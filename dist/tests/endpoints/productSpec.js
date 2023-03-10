@@ -8,6 +8,7 @@ const server_1 = __importDefault(require("../../server"));
 const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
 const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const request = (0, supertest_1.default)(server_1.default);
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0VXNlciIsImlhdCI6MTY3ODQ2MzgzOX0.EpXJIqbMgMwvumizAUekjOtGyP7WpP5Agc5ugSRn4c0';
 describe('Product Routes Suite', () => {
     beforeAll(() => {
         (0, initializeDb_1.default)();
@@ -20,7 +21,7 @@ describe('Product Routes Suite', () => {
             name: 'coffee',
             price: 5,
         };
-        const response = await request.post('/api/products/create').send(test);
+        const response = await request.post('/api/products/create').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
         expect(response.body).toEqual({ id: 1, name: 'coffee', price: 5 });
     });
@@ -37,11 +38,11 @@ describe('Product Routes Suite', () => {
             name: 'moccha',
             price: 6,
         };
-        const response = await request.put('/api/products/1').send(test);
+        const response = await request.put('/api/products/1').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
     });
     it('/api/products/:id should delete the product', async () => {
-        const response = await request.delete('/api/products/1');
+        const response = await request.delete('/api/products/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
 });
