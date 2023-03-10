@@ -29,8 +29,13 @@ export class UserHandler {
     }
     async create(req: Request, res: Response) {
         try{
+            if(!req.body.password || !req.body.username){
+                res.status(400).json('Please Provide a username and password');
+            }
+            else{
             const user = await store.createUser(req.body);
             res.status(201).json(user);
+            }
         }
         catch (err) {
             res.status(500).json(err);
