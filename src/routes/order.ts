@@ -11,5 +11,6 @@ OrderRouter.get('/:id', Handler.show);
 OrderRouter.post('/create', Handler.create);
 OrderRouter.put('/:id', Handler.update);
 OrderRouter.delete('/:id', Handler.destroy);
+OrderRouter.post('/:id/products', Handler.addProductToOrder);
 
 export default OrderRouter;
