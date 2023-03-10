@@ -1,16 +1,20 @@
 import { OrderStore } from "../../models/order";
 import { UserStore } from "../../models/user";
+import createTestDb from "../helpers/initializeDb";
+import resetDb from "../helpers/resetDb";
 
 const store = new OrderStore();
 const userStore = new UserStore();
 let id = 1;
 describe('Order Model Suite', () => {
     beforeAll(async () => {
+        createTestDb();
         const result = await userStore.createUser({first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4'});
         id = result.id ? result.id : 1;
     })
     afterAll(async () => {
         const result = await userStore.deleteUser(id);
+        resetDb();
     })
     it('Expects store.createOrder(o) to create a new Order', async () => {
         const result = await store.createOrder({status: 'active', user_id: id});

@@ -8,50 +8,51 @@ export class OrderHandler {
     async index(req: Request, res: Response) {
         try{
             const order = await store.indexOrders(parseInt(req.params.user_id));
-            res.json(order);
+            res.status(200).json(order);
         }
         catch (err){
-            res.status(400).json(err);
+            res.status(500).json(err);
         }
     }
     async show(req: Request, res: Response) {
         try{
             const order = await store.showOrder(parseInt(req.params.id));
             if(order){
-                res.json(order);
+                res.status(200).json(order);
             } else{
                 res.status(404).json('order not found');
             }
         }
         catch (err) {
-            res.json(err);
+            res.status(500).json(err);
         }
     }
     async create(req: Request, res: Response) {
         try{
             const order = await store.createOrder(req.body);
-            res.json(order);
+            res.status(201).json(order);
         }
         catch (err) {
-            res.json(err);
+            res.status(500).json(err);
         }
     }
     async update(req: Request, res: Response){
         try{
             const order = await store.editOrder({id: parseInt(req.params.id), status: req.body.status, user_id: parseInt(req.body.user_id)});
-            res.json(order);
+            res.status(201).json(order);
 
         }
         catch (err) {
-            res.json(err);
+            res.status(500).json(err);
         }
     }
     async destroy(req: Request, res:Response) {
         try{
             const order = await store.deleteOrder(parseInt(req.params.id));
+            res.status(200).json({status: `Deleted ${order}`});
         }
         catch (err) {
-            res.json(err);
+            res.status(500).json(err);
         }
     }
 }

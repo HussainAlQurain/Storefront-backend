@@ -1,9 +1,17 @@
 import supertest from 'supertest'
 import app from '../../server'
+import createTestDb from '../helpers/initializeDb'
+import resetDb from '../helpers/resetDb'
 
 const request = supertest(app)
 
 describe('Order Routes Suite', () => {
+    beforeAll(() => {
+        createTestDb();
+    })
+    afterAll(() => {
+        resetDb();
+    })
     it('api/orders/create should return a newly created order', () => {
         const test = {
             status: 'active',

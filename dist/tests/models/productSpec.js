@@ -1,8 +1,19 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = require("../../models/product");
+const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
+const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const store = new product_1.ProductStore();
 describe('Product Model Suite', () => {
+    beforeAll(() => {
+        (0, initializeDb_1.default)();
+    });
+    afterAll(() => {
+        (0, resetDb_1.default)();
+    });
     it('Expects store.createProduct(p) to create a new product', async () => {
         const result = await store.createProduct({ name: 'LiS', price: 20 });
         expect(result.name).toEqual('LiS');

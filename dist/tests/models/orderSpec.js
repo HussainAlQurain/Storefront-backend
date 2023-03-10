@@ -1,17 +1,24 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const order_1 = require("../../models/order");
 const user_1 = require("../../models/user");
+const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
+const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const store = new order_1.OrderStore();
 const userStore = new user_1.UserStore();
 let id = 1;
 describe('Order Model Suite', () => {
     beforeAll(async () => {
+        (0, initializeDb_1.default)();
         const result = await userStore.createUser({ first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4' });
         id = result.id ? result.id : 1;
     });
     afterAll(async () => {
         const result = await userStore.deleteUser(id);
+        (0, resetDb_1.default)();
     });
     it('Expects store.createOrder(o) to create a new Order', async () => {
         const result = await store.createOrder({ status: 'active', user_id: id });

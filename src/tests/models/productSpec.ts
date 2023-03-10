@@ -1,8 +1,16 @@
 import { ProductStore } from "../../models/product";
+import createTestDb from "../helpers/initializeDb";
+import resetDb from "../helpers/resetDb";
 
 const store = new ProductStore();
 
 describe('Product Model Suite', () => {
+    beforeAll(() => {
+        createTestDb();
+    })
+    afterAll(() => {
+        resetDb();
+    })
     it('Expects store.createProduct(p) to create a new product', async () => {
         const result = await store.createProduct({name: 'LiS', price: 20});
         expect(result.name).toEqual('LiS');

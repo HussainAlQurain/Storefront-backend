@@ -1,8 +1,16 @@
 import { User, UserStore } from "../../models/user";
+import createTestDb from "../helpers/initializeDb";
+import resetDb from "../helpers/resetDb";
 
 const store = new UserStore();
 
 describe('User Model Suite', () => {
+    beforeAll(() => {
+        createTestDb();
+    })
+    afterAll(() => {
+        resetDb();
+    })
     it('Expects store.createUser(u) to create a new user', async () => {
         const result = await store.createUser({first_name: 'hussain', last_name: 'qurain', username: 'rayleigh50', password_digest: 'test123'});
         expect(result.username).toEqual('rayleigh50');

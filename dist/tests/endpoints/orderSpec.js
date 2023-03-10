@@ -5,8 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const server_1 = __importDefault(require("../../server"));
+const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
+const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const request = (0, supertest_1.default)(server_1.default);
 describe('Order Routes Suite', () => {
+    beforeAll(() => {
+        (0, initializeDb_1.default)();
+    });
+    afterAll(() => {
+        (0, resetDb_1.default)();
+    });
     it('api/orders/create should return a newly created order', () => {
         const test = {
             status: 'active',

@@ -1,19 +1,29 @@
 import supertest from 'supertest'
 import app from '../../server'
-
+import createTestDb from '../helpers/initializeDb';
+import resetDb from '../helpers/resetDb';
 const request = supertest(app)
 
 describe('Product Routes Suite', () => {
-    it('api/products/create should return a newly created product', () => {
+    beforeAll(() => {
+        createTestDb();
+    })
+
+    afterAll(() => {
+        resetDb();
+    })
+    it('api/products/create should return a newly created product', async () => {
         const test = {
             name: 'coffee',
             price: 5,
-
         }
-        request.post('/api/products/create').send(test).expect(201).expect({id: 1, name: 'coffee', price: 5});
+        const response = await request.post('/api/products/create').send(test);
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({id: 1, name: 'coffee', price: 5});
     })
-    it('api/products should return all products', () => {
-        request.get('api/products').expect(200);
+    it('api/products should return all products', async () => {
+        const response = await request.get('api/products');
+        expect(response.status).toBe(200);
     })
     it('api/products/:id should return the product', () => {
         request.get('api/products/1').expect(200);

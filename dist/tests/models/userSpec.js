@@ -1,8 +1,19 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../../models/user");
+const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
+const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const store = new user_1.UserStore();
 describe('User Model Suite', () => {
+    beforeAll(() => {
+        (0, initializeDb_1.default)();
+    });
+    afterAll(() => {
+        (0, resetDb_1.default)();
+    });
     it('Expects store.createUser(u) to create a new user', async () => {
         const result = await store.createUser({ first_name: 'hussain', last_name: 'qurain', username: 'rayleigh50', password_digest: 'test123' });
         expect(result.username).toEqual('rayleigh50');
