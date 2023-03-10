@@ -43,7 +43,9 @@ describe('User Routes Suite', () => {
     });
     it('/api/users/:id should return the user', async () => {
         const response = await request.get('/api/users/1');
+        delete response.body.password_digest;
         expect(response.status).toBe(200);
+        expect(response.body).toEqual({ id: 1, first_name: 'user1', last_name: 'user2', username: 'testUser' });
     });
     it('/api/users/:id should edit the user', async () => {
         const test = {
