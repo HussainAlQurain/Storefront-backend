@@ -8,30 +8,31 @@ Information about the routes will be shown in REQUIREMENT.md.
 Run the following command to install all required libraries:
 - yarn install
 
-connect to the default postgres database as the server's root user psql -U postgres
-Create a new user:
-    - CREATE USER hussain WITH PASSWORD 'password123';
+Connect to the default postgres database as the server's root user psql -U postgres and
+
+Create a new user by:
+- CREATE USER hussain WITH PASSWORD 'password123';
 
 Create Two databases:
-    - CREATE DATABASE full_stack_dev;
-    - CREATE DATABASE full_stack_dev_test;
+- CREATE DATABASE full_stack_dev;
+- CREATE DATABASE full_stack_dev_test;
 
 Connect to each database and grant privileges to the user:
-    \c full_stack_dev
-    GRANT ALL PRIVILEGES ON DATABASE full_stack_dev to hussain;
-    \c full_stack_dev_test
-    GRANT ALL PRIVILEGES ON DATABASE full_stack_dev_test to hussain;
+- \c full_stack_dev
+- GRANT ALL PRIVILEGES ON DATABASE full_stack_dev to hussain;
+- \c full_stack_dev_test
+- GRANT ALL PRIVILEGES ON DATABASE full_stack_dev_test to hussain;
     
 install dotenv (yarn add dotenv), and setup .env file to contain the following details:
-    POSTGRES_HOST=127.0.0.1
-    POSTGRES_DB=full_stack_dev
-    POSTGRES_TEST_DB=full_stack_dev_test
-    POSTGRES_USER=hussain
-    POSTGRES_PASSWORD=password123!
-    ENV=dev
-    BCRYPT_PASSWORD=secret-pass
-    SALT_ROUNDS=10
-    TOKEN_SECRET=asdfqwemio
+- POSTGRES_HOST=127.0.0.1
+- POSTGRES_DB=full_stack_dev
+- POSTGRES_TEST_DB=full_stack_dev_test
+- POSTGRES_USER=hussain
+- POSTGRES_PASSWORD=password123!
+- ENV=dev
+- BCRYPT_PASSWORD=secret-pass
+- SALT_ROUNDS=10
+- TOKEN_SECRET=asdfqwemio
 
 
 Run the tests by:
