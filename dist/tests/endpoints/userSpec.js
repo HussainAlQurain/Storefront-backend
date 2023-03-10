@@ -15,7 +15,7 @@ describe('User Routes Suite', () => {
     afterAll(() => {
         (0, resetDb_1.default)();
     });
-    it('/api/users/create should create a new user with the same attributes', async () => {
+    it('/api/users/create should create a new user and return jwt token', async () => {
         const test = {
             first_name: 'user1',
             last_name: 'user2',

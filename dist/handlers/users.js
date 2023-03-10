@@ -67,7 +67,8 @@ class UserHandler {
     async authenticate(req, res) {
         try {
             const user = await store.authenticate(req.body.username, req.body.password);
-            res.status(200).json(user);
+            let token = jsonwebtoken_1.default.sign({ user: user }, process.env.TOKEN_SECRET);
+            res.status(201).json(token);
         }
         catch (err) {
             res.status(500).json(err);
