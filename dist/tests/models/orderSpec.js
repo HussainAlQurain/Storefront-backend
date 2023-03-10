@@ -4,11 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const order_1 = require("../../models/order");
+const product_1 = require("../../models/product");
 const user_1 = require("../../models/user");
 const initializeDb_1 = __importDefault(require("../helpers/initializeDb"));
 const resetDb_1 = __importDefault(require("../helpers/resetDb"));
 const store = new order_1.OrderStore();
 const userStore = new user_1.UserStore();
+const productStore = new product_1.ProductStore();
 let id = 1;
 describe('Order Model Suite', () => {
     beforeAll(async () => {

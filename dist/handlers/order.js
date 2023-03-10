@@ -54,5 +54,14 @@ class OrderHandler {
             res.status(500).json(err);
         }
     }
+    async addProductToOrder(req, res) {
+        try {
+            const product = await store.addProductToOrder(req.body.quantity, req.params.orderId, req.body.productId);
+            res.status(201).json(product);
+        }
+        catch (err) {
+            res.status(400).json(err);
+        }
+    }
 }
 exports.OrderHandler = OrderHandler;

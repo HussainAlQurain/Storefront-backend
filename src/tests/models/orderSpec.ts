@@ -1,10 +1,13 @@
 import { OrderStore } from "../../models/order";
+import { ProductStore } from "../../models/product";
 import { UserStore } from "../../models/user";
 import createTestDb from "../helpers/initializeDb";
 import resetDb from "../helpers/resetDb";
 
 const store = new OrderStore();
 const userStore = new UserStore();
+const productStore = new ProductStore();
+
 let id = 1;
 describe('Order Model Suite', () => {
     beforeAll(async () => {

@@ -52,4 +52,12 @@ describe('Order Routes Suite', () => {
         const response = await request.delete('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
+    it('/api/orders:id/products should return the products within an order', async () => {
+        const test = {
+            quantity: 5,
+            productId: 1
+        };
+        const response = await request.post('/api/orders/1/products').set('Authorization', `Bearer ${token}`);
+        expect(response.status).toBe(201);
+    });
 });
