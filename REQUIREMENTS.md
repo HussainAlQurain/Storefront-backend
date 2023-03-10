@@ -5,38 +5,50 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
+- Index '/api/products/' [GET]
+- Show '/api/products/:id' [GET]
+- Create [token required] '/api/products' [POST]
+- Update [token required] '/api/products/:id' [PUT]
+- Delete [token required] '/api/products/:id' [DELETE]
 - [OPTIONAL] Top 5 most popular products 
 - [OPTIONAL] Products by category (args: product category)
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index [token required] '/api/users' [GET]
+- Show [token required] '/api/users/:id' [GET]
+- Create returns token '/api/users/create' [POST]
+- Login returns token '/api/users/login' [POST]
+- Update [token required] 'api/users/:id' [PUT]
+- Delete [token required] 'api/users/:id' [DELETE]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Order by user (args: user id)[token required] '/api/orders/user_id/:user_id' [GET]
+- Current order by user (args: user id) [token required] '/api/orders/:id' [GET]
+- Update [token required] '/api/orders/:id' [PUT]
+- Delete [token required] '/api/orders/:id' [DELETE]
+- Product to order (args: quantity, orderId, productId) [token required] '/api/orders/:id/products' [POST]
 
 ## Data Shapes
 #### Product
 -  id
 - name
 - price
-- [OPTIONAL] category
 
 #### User
 - id
-- firstName
-- lastName
-- password
+- first_name
+- last_name
+- username
+- password_digest
 
 #### Orders
 - id
-- id of each product in the order
-- quantity of each product in the order
+- status (active or complete)
 - user_id
-- status of order (active or complete)
+
+#### order_products
+- id
+- quantity
+- order_id
+- product_id
 
