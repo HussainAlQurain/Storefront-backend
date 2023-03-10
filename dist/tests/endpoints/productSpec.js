@@ -15,7 +15,7 @@ describe('Product Routes Suite', () => {
     afterAll(() => {
         (0, resetDb_1.default)();
     });
-    it('api/products/create should return a newly created product', async () => {
+    it('/api/products/create should return a newly created product', async () => {
         const test = {
             name: 'coffee',
             price: 5,
@@ -24,21 +24,24 @@ describe('Product Routes Suite', () => {
         expect(response.status).toBe(201);
         expect(response.body).toEqual({ id: 1, name: 'coffee', price: 5 });
     });
-    it('api/products should return all products', async () => {
-        const response = await request.get('api/products');
+    it('/api/products should return all products', async () => {
+        const response = await request.get('/api/products');
         expect(response.status).toBe(200);
     });
-    it('api/products/:id should return the product', () => {
-        request.get('api/products/1').expect(200);
+    it('/api/products/:id should return the product', async () => {
+        const response = await request.get('/api/products/1');
+        expect(response.status).toBe(200);
     });
-    it('api/products/:id should edit the products', () => {
+    it('/api/products/:id should edit the products', async () => {
         const test = {
             name: 'moccha',
             price: 6,
         };
-        request.put('/api/products/1').send(test).expect(200);
+        const response = await request.put('/api/products/1').send(test);
+        expect(response.status).toBe(201);
     });
-    it('api/products/:id should delete the product', () => {
-        request.delete('/api/products/1').expect(200);
+    it('/api/products/:id should delete the product', async () => {
+        const response = await request.delete('/api/products/1');
+        expect(response.status).toBe(200);
     });
 });
