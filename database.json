@@ -1,16 +1,16 @@
 {
-    "dev": {
-      "driver": "pg",
-      "host": "127.0.0.1",
-      "database": "full_stack_dev",
-      "user": "hussain",
-      "password": "password123!"
-    },
-    "test": {
-      "driver": "pg",
-      "host": "127.0.0.1",
-      "database": "full_stack_dev_test",
-      "user": "hussain",
-      "password": "password123!"
-    }
+  "dev": {
+    "driver": "pg",
+    "host": { "ENV":  "POSTGRES_HOST"},
+    "database": { "ENV": "POSTGRES_DB_DEV" },
+    "user": { "ENV": "POSTGRES_USER" },
+    "password": { "ENV": "POSTGRES_PASSWORD" }
+  },
+  "test": {
+    "driver": "pg",
+    "host": { "ENV":  "POSTGRES_HOST" },
+    "database": { "ENV": "POSTGRES_DB_TEST" },
+    "user": { "ENV": "POSTGRES_USER" },
+    "password": { "ENV": "POSTGRES_PASSWORD" }
   }
+}
