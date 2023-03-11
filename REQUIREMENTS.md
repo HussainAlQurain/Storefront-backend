@@ -33,18 +33,39 @@ These are the notes from a meeting with the frontend developer that describe wha
 -  id
 - name
 - price
-
+``` sql
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name varchar(100) NOT NULL,
+    price integer NOT NULL
+);
+```
 #### User
 - id
 - first_name
 - last_name
 - username
 - password_digest
-
+``` sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    first_name varchar(50) NOT NULL,
+    last_name varchar(50) NOT NULL,
+    username varchar(30) NOT NULL,
+    password_digest varchar
+);
+```
 #### Orders
 - id
 - status (active or complete)
 - user_id
+``` sql
+CREATE TABLE orders (
+id SERIAL PRIMARY KEY,
+status varchar(20),
+user_id bigint REFERENCES users(id)
+);
+```
 
 #### order_products
 - id
@@ -52,3 +73,11 @@ These are the notes from a meeting with the frontend developer that describe wha
 - order_id
 - product_id
 
+``` sql
+CREATE TABLE order_products (
+    id SERIAL PRIMARY KEY,
+    quantity integer,
+    order_id bigint REFERENCES orders(id),
+    product_id bigint REFERENCES products(id)
+);
+```

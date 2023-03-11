@@ -8,7 +8,7 @@ Information about the routes will be shown in REQUIREMENT.md.
 Run the following command to install all required libraries:
 - yarn install
 
-Connect to the default postgres database as the server's root user psql -U postgres and
+Connect to the default postgres database as the server's root user psql -h 127.0.0.1 -U hussain postgres.
 
 Create a new user by:
 - CREATE USER hussain WITH PASSWORD 'password123';
