@@ -2,14 +2,19 @@ import supertest from 'supertest'
 import app from '../../server'
 import createTestDb from '../helpers/initializeDb';
 import resetDb from '../helpers/resetDb';
-import jwt from 'jsonwebtoken';
 
 const request = supertest(app)
-const token = jwt.sign({ user: 'test' }, process.env.TOKEN_SECRET as string);
+let token: string;
 
 describe('Product Routes Suite', () => {
-    beforeAll(() => {
+    beforeAll(async () => {
         createTestDb();
+        const user = await request.post('/api/users/create').send({
+            first_name: 'authUser',
+            last_name: 'test',
+            username: 'test123',
+            password: '123'});
+            token = user.body;
     })
 
     afterAll(() => {
