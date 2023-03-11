@@ -7,6 +7,13 @@ export type Order = {
     user_id: number;
 }
 
+export type OrderProducts = {
+    id?: number;
+    quantity: number;
+    order_id: string;
+    product_id: string;
+}
+
 export class OrderStore {
     async indexOrders(userId: number): Promise<Order[]> {
         try {
@@ -74,14 +81,17 @@ export class OrderStore {
             throw new Error(`Could not delete order: ${err}`);
         }
     }
-    async addProductToOrder(quantity: number, orderId: string, productId: string): Promise<Order> {
+    async addProductToOrder(quantity: number, orderId: string, productId: string): Promise<OrderProducts[]> {
         try{
             // @ts-ignore
             const conn = await client.connect();
+            
             const sql = 'INSERT INTO order_products (quantity, order_id, product_id) VALUES ($1, $2, $3)';
-            const result = await conn.query(sql, [quantity, orderId, productId])
+            await conn.query(sql, [quantity, orderId, productId]);
 
-            const order = result.rows[0]
+            const selectSql = 'SELECT * FROM order_products WHERE order_id = ($1)';
+            const result = await conn.query(selectSql, [orderId]);
+            const order = result.rows;
 
             conn.release()
             return order

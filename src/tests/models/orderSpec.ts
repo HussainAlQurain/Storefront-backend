@@ -51,4 +51,26 @@ describe('Order Model Suite', () => {
         expect(orders.length).toEqual(0);
         
     })
+    it('Expects store.addProductToOrder to create new row in order_products table', async () => {
+        resetDb();
+        createTestDb();
+
+        const testUser = await userStore.createUser({first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4'});
+        const testOrder = await store.createOrder({status: 'active', user_id: 1});
+        const testProduct = await productStore.createProduct({name: 'Life is Strange 2', price: 25});
+        const testProduct2 = await productStore.createProduct({name: 'Life is Strange', price: 20});
+
+        const oId: string = testOrder.id?.toString() ?? '1';
+        const pId: string = testProduct.id?.toString() ?? '1';
+        const pId2: string = testProduct2.id?.toString() ?? '2';
+        
+        const result = await store.addProductToOrder(5, oId, pId);
+        const result2 = await store.addProductToOrder(5, oId, pId2);
+
+        expect(result).toBeDefined();
+        expect(result[0]).toEqual({ id: 1, quantity: 5, order_id: '1', product_id: '1'});
+        expect(result2.length).toEqual(2);
+        resetDb();
+        createTestDb();
+    })
 })
