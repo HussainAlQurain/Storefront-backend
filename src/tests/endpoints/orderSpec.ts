@@ -2,7 +2,6 @@ import supertest from 'supertest'
 import app from '../../server'
 import createTestDb from '../helpers/initializeDb'
 import resetDb from '../helpers/resetDb'
-import jwt from 'jsonwebtoken';
 
 const request = supertest(app)
 let token: string;

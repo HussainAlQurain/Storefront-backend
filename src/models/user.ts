@@ -6,7 +6,7 @@ export type User = {
     first_name: string;
     last_name: string;
     username: string;
-    password_digest: string;
+    password_digest?: string;
 }
 
 export class UserStore {
