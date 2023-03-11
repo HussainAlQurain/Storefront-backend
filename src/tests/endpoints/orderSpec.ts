@@ -5,16 +5,17 @@ import resetDb from '../helpers/resetDb'
 import jwt from 'jsonwebtoken';
 
 const request = supertest(app)
-const token = jwt.sign({ user: 'test' }, process.env.TOKEN_SECRET as string);
+let token: string;
 
 describe('Order Routes Suite', () => {
     beforeAll(async () => {
         createTestDb();
-        await request.post('/api/users/create').send({
+        const user = await request.post('/api/users/create').send({
         first_name: 'user1',
         last_name: 'user2',
         username: 'testUser',
-        password: 'asd123'})
+        password: 'asd123'});
+        token = user.body;
     });
     afterAll(() => {
         resetDb();
