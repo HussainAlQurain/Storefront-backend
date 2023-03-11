@@ -34,6 +34,10 @@ install dotenv (yarn add dotenv), and setup .env file to contain the following d
 - SALT_ROUNDS=10
 - TOKEN_SECRET=asdfqwemio
 
+#### Ports
+- The app runs on port 3000.
+- The database runs on 5432.
+
 
 Run the tests by:
 - yarn test
