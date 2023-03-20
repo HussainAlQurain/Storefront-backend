@@ -13,7 +13,8 @@ describe('User Routes Suite', () => {
             first_name: 'authUser',
             last_name: 'test',
             username: 'test123',
-            password: '123'});
+            password: '123',
+            email: 'test@gmail.com'});
             token = user.body;
     })
     afterAll(() => {
@@ -24,7 +25,8 @@ describe('User Routes Suite', () => {
             first_name: 'user1',
             last_name: 'user2',
             username: 'testUser',
-            password: 'asd123'
+            password: 'asd123',
+            email: 'test@gmail.com'
         }
         const response = await request.post('/api/users/create').send(test);
         expect(response.status).toBe(201);
@@ -49,14 +51,15 @@ describe('User Routes Suite', () => {
         const response = await request.get('/api/users/2').set('Authorization', `Bearer ${token}`);
         delete response.body.password_digest;
         expect(response.status).toBe(200);
-        expect(response.body).toEqual({id: 2, first_name: 'user1', last_name: 'user2', username: 'testUser'});
+        expect(response.body).toEqual({id: 2, first_name: 'user1', last_name: 'user2', username: 'testUser', email: 'test@gmail.com'});
     })
     it('/api/users/:id should edit the user', async () => {
         const test = {
             first_name: 'user1',
             last_name: 'user2',
             username: 'testUser',
-            password: '123321'
+            password: '123321',
+            email: 'test@gmail.com'
         }
         const response = await request.put('/api/users/2').send(test).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(201);

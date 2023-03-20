@@ -12,7 +12,7 @@ let id = 1;
 describe('Order Model Suite', () => {
     beforeAll(async () => {
         createTestDb();
-        const result = await userStore.createUser({first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4'});
+        const result = await userStore.createUser({first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4', email: 'test@gmail.com'});
         id = result.id ? result.id : 1;
     })
     afterAll(async () => {
@@ -55,7 +55,7 @@ describe('Order Model Suite', () => {
         resetDb();
         createTestDb();
 
-        const testUser = await userStore.createUser({first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4'});
+        const testUser = await userStore.createUser({first_name: 'test1', last_name: 'test2', username: 'test3', password_digest: 'test4', email: 'test@gmail.com'});
         const testOrder = await store.createOrder({status: 'active', user_id: 1});
         const testProduct = await productStore.createProduct({name: 'Life is Strange 2', price: 25});
         const testProduct2 = await productStore.createProduct({name: 'Life is Strange', price: 20});

@@ -44,7 +44,7 @@ export class UserHandler {
     }
     async update(req: Request, res: Response){
         try{
-            const user = await store.editUser({id: parseInt(req.params.id), first_name: req.body.first_name, last_name: req.body.last_name, username: req.body.username, password_digest: req.body.password});
+            const user = await store.editUser({id: parseInt(req.params.id), first_name: req.body.first_name, last_name: req.body.last_name, username: req.body.username, password_digest: req.body.password, email: req.body.email});
             res.status(201).json(user);
 
         }

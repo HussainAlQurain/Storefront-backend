@@ -12,7 +12,7 @@ describe('User Model Suite', () => {
         resetDb();
     })
     it('Expects store.createUser(u) to create a new user', async () => {
-        const result = await store.createUser({first_name: 'hussain', last_name: 'qurain', username: 'rayleigh50', password_digest: 'test123'});
+        const result = await store.createUser({first_name: 'hussain', last_name: 'qurain', username: 'rayleigh50', password_digest: 'test123', email: 'test@gmail.com'});
         expect(result.username).toEqual('rayleigh50');
     })
     it('Expects store.indexUsers to return users', async () => {
@@ -27,7 +27,8 @@ describe('User Model Suite', () => {
             first_name: "ray",
             last_name: "qurain",
             username: "rayleigh50",
-            password_digest: "test1233"
+            password_digest: "test1233",
+            email: "test@gmail.com"
         });
         expect(result.first_name).toEqual('ray');
     })

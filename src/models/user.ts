@@ -7,6 +7,7 @@ export type User = {
     last_name: string;
     username: string;
     password_digest?: string;
+    email: string
 }
 
 export class UserStore {
@@ -43,12 +44,12 @@ export class UserStore {
             const saltRounds: string = process.env.SALT_ROUNDS as string;
             // @ts-ignore
             const conn = await client.connect();
-            const sql = 'INSERT INTO users (first_name, last_name, username, password_digest) VALUES ($1, $2, $3, $4) RETURNING *';
+            const sql = 'INSERT INTO users (first_name, last_name, username, password_digest, email) VALUES ($1, $2, $3, $4, $5) RETURNING *';
             const hash = bcrypt.hashSync(
                 u.password_digest + pepper, 
                 parseInt(saltRounds)
              );
-            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, hash]);
+            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, hash, u.email]);
             conn.release();
             return result.rows[0];
         }
