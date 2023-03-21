@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors';
 import routes from './routes';
+import morgan from 'morgan';
 
 const app: express.Application = express()
 const address: string = "http://localhost:3000"
@@ -13,6 +14,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
+app.use(morgan('combined'))
 app.use('/api', routes)
 
 app.get('/', function (req: Request, res: Response) {
