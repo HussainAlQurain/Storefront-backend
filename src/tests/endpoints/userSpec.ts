@@ -33,6 +33,15 @@ describe('User Routes Suite', () => {
         //check for jwt token
         expect(response.body.split('.').length).toEqual(3);
     })
+    it('/api/users/login should login to the user successfully', async () => {
+        const test = {
+            username: 'testUser',
+            password: 'asd123'
+        }
+        const response = await request.post('/api/users/login').send(test);
+        expect(response.status).toBe(201)
+        expect(response.body.user).toBeDefined()
+    })
     it('/api/users/create should return error for not providing password', async () => {
         const test = {
             first_name: 'user1',
