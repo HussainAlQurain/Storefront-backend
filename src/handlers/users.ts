@@ -64,8 +64,13 @@ export class UserHandler {
     async authenticate(req: Request, res: Response) {
         try{
             const user = await store.authenticate(req.body.username, req.body.password);
+            if(user){
             let token = jwt.sign({ user: user }, process.env.TOKEN_SECRET as string);
             res.status(201).json(token);
+            }
+            else{
+                res.status(400).json('No user found');
+            }
         }
         catch (err) {
             res.status(500).json(err);

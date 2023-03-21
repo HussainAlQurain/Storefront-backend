@@ -14,7 +14,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
-app.use(morgan('combined'))
+app.use(morgan('tiny'))
 app.use('/api', routes)
 
 app.get('/', function (req: Request, res: Response) {

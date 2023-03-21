@@ -94,7 +94,6 @@ export class UserStore {
         const conn = await client.connect();
         const sql = 'SELECT password_digest FROM users where username=($1)';
         const result = await conn.query(sql, [username]);
-        
         if(result.rows.length) {
             const user = result.rows[0];
 
