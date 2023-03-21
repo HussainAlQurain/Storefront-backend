@@ -13,7 +13,7 @@ describe('Order Routes Suite', () => {
         first_name: 'user1',
         last_name: 'user2',
         username: 'testUser',
-        password: 'asd123'});
+        password_digest: 'asd123'});
         token = user.body;
     });
     afterAll(() => {

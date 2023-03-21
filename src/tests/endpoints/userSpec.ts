@@ -13,7 +13,7 @@ describe('User Routes Suite', () => {
             first_name: 'authUser',
             last_name: 'test',
             username: 'test123',
-            password: '123',
+            password_digest: '123',
             email: 'test@gmail.com'});
             token = user.body;
     })
@@ -25,7 +25,7 @@ describe('User Routes Suite', () => {
             first_name: 'user1',
             last_name: 'user2',
             username: 'testUser',
-            password: 'asd123',
+            password_digest: 'asd123',
             email: 'test@gmail.com'
         }
         const response = await request.post('/api/users/create').send(test);
@@ -36,7 +36,7 @@ describe('User Routes Suite', () => {
     it('/api/users/login should login to the user successfully', async () => {
         const test = {
             username: 'testUser',
-            password: 'asd123'
+            password_digest: 'asd123'
         }
         const response = await request.post('/api/users/login').send(test);
         expect(response.status).toBe(201)
@@ -67,7 +67,7 @@ describe('User Routes Suite', () => {
             first_name: 'user1',
             last_name: 'user2',
             username: 'testUser',
-            password: '123321',
+            password_digest: '123321',
             email: 'test@gmail.com'
         }
         const response = await request.put('/api/users/2').send(test).set('Authorization', `Bearer ${token}`);
@@ -89,7 +89,7 @@ describe('User Routes Suite', () => {
     it('/api/users/login should fail to login and return null', async () => {
         const test = {
             username: 'asdqweqwe',
-            password: '41243212dasd'
+            password_digest: '41243212dasd'
         }
         const response = await request.post('/api/users/login').send(test);
         expect(response.status).toBe(400)

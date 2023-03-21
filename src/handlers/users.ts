@@ -29,7 +29,7 @@ export class UserHandler {
     }
     async create(req: Request, res: Response) {
         try{
-            if(!req.body.password || !req.body.username){
+            if(!req.body.password_digest || !req.body.username){
                 res.status(400).json('Please Provide a username and password');
             }
             else{
@@ -63,7 +63,7 @@ export class UserHandler {
     }
     async authenticate(req: Request, res: Response) {
         try{
-            const user = await store.authenticate(req.body.username, req.body.password);
+            const user = await store.authenticate(req.body.username, req.body.password_digest);
             if(user){
             let token = jwt.sign({ user: user }, process.env.TOKEN_SECRET as string);
             res.status(201).json(token);

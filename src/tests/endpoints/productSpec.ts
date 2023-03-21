@@ -13,7 +13,7 @@ describe('Product Routes Suite', () => {
             first_name: 'authUser',
             last_name: 'test',
             username: 'test123',
-            password: '123'});
+            password_digest: '123'});
             token = user.body;
     })
 
