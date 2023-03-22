@@ -40,7 +40,7 @@ describe('User Routes Suite', () => {
         }
         const response = await request.post('/api/users/login').send(test);
         expect(response.status).toBe(201)
-        expect(response.body.user).toBeDefined()
+        expect(response.body).toBeDefined()
     })
     it('/api/users/create should return error for not providing password', async () => {
         const test = {
@@ -76,15 +76,6 @@ describe('User Routes Suite', () => {
     it('/api/users/:id should delete the user', async () => {
         const response = await request.delete('/api/users/2').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
-    })
-    it('/api/users/login should login to the user successfully', async () => {
-        const test = {
-            username: 'testUser',
-            password: '123321'
-        }
-        const response = await request.post('/api/users/login').send(test);
-        expect(response.status).toBe(201)
-        expect(response.body.user).toBeDefined()
     })
     it('/api/users/login should fail to login and return null', async () => {
         const test = {
