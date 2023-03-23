@@ -24,10 +24,12 @@ describe('Product Routes Suite', () => {
         const test = {
             name: 'coffee',
             price: 5,
+            url: '',
+            description: ''
         }
         const response = await request.post('/api/products/create').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
-        expect(response.body).toEqual({id: 1, name: 'coffee', price: 5});
+        expect(response.body).toEqual({id: 1, name: 'coffee', price: 5, url: '', description: ''});
     })
     it('/api/products should return all products', async () => {
         const response = await request.get('/api/products');
@@ -41,6 +43,8 @@ describe('Product Routes Suite', () => {
         const test = {
             name: 'moccha',
             price: 6,
+            url: 'test',
+            description: 'test123'
         }
         const response = await request.put('/api/products/1').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);

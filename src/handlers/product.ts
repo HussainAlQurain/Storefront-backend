@@ -38,7 +38,7 @@ export class ProductHandler {
     }
     async update(req: Request, res: Response){
         try{
-            const product = await store.editProduct({id: parseInt(req.params.id), name: req.body.name, price: parseInt(req.body.price)});
+            const product = await store.editProduct({id: parseInt(req.params.id), name: req.body.name, price: parseInt(req.body.price), url: req.body.url, description: req.body.description});
             res.status(201).json(product);
 
         }

@@ -12,7 +12,7 @@ describe('Product Model Suite', () => {
         resetDb();
     })
     it('Expects store.createProduct(p) to create a new product', async () => {
-        const result = await store.createProduct({name: 'LiS', price: 20});
+        const result = await store.createProduct({name: 'LiS', price: 20, url: '', description: ''});
         expect(result.name).toEqual('LiS');
     })
     it('Expects store.indexProducts to return products', async () => {
@@ -26,6 +26,8 @@ describe('Product Model Suite', () => {
             id: productId,
             name: "Life is Strange",
             price: 30,
+            url: 'test',
+            description: 'test123'
         });
         expect(result.price).toEqual(30);
     })
