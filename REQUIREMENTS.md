@@ -7,7 +7,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Products
 - Index '/api/products/' [GET]
 - Show '/api/products/:id' [GET]
-- Create [token required] '/api/products' [POST]
+- Create [token required] '/api/products/create' [POST]
 - Update [token required] '/api/products/:id' [PUT]
 - Delete [token required] '/api/products/:id' [DELETE]
 - [OPTIONAL] Top 5 most popular products 
