@@ -92,7 +92,7 @@ export class UserStore {
     async authenticate(username: string, password: string): Promise<User|null> {
         // @ts-ignore
         const conn = await client.connect();
-        const sql = 'SELECT password_digest FROM users where username=($1)';
+        const sql = 'SELECT id, password_digest FROM users where username=($1)';
         const result = await conn.query(sql, [username]);
         if(result.rows.length) {
             const user = result.rows[0];
