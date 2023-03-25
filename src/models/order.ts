@@ -32,7 +32,7 @@ export class OrderStore {
         try {
             // @ts-ignore
             const conn = await client.connect();
-            const sql = 'SELECT * FROM orders WHERE user_id=($1) ORDER BY id LIMIT 1';
+            const sql = 'SELECT * FROM orders WHERE user_id=($1) AND status = \'active\' ORDER BY id LIMIT 1';
             const result = await conn.query(sql, [userId]);
             conn.release();
             return result.rows[0];

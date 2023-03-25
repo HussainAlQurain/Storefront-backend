@@ -27,6 +27,12 @@ describe('Order Model Suite', () => {
         const result = await store.indexOrders(id);
         expect(result.length).toBe(1);
     })
+    it('Expects store.showOrder to return order', async () => {
+        const orders = await store.indexOrders(id);
+        const orderUserId = orders[0].user_id;
+        const result = await store.showOrder(orderUserId ? orderUserId : 1);
+        expect(Number(result.user_id)).toEqual(id);
+    })
     it('Expects store.editOrder to update order', async () => {
         const orders = await store.indexOrders(id);
         const orderId = orders[0].id;
@@ -36,12 +42,6 @@ describe('Order Model Suite', () => {
             user_id: id,
         });
         expect(result.status).toEqual('complete');
-    })
-    it('Expects store.showOrder to return order', async () => {
-        const orders = await store.indexOrders(id);
-        const orderUserId = orders[0].user_id;
-        const result = await store.showOrder(orderUserId ? orderUserId : 1);
-        expect(Number(result.user_id)).toEqual(id);
     })
     it('Expects store.deleteOrder to delete the order', async () => {
         let orders = await store.indexOrders(id);
