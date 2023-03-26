@@ -8,6 +8,7 @@ let token: string;
 
 describe('Order Routes Suite', () => {
     beforeAll(async () => {
+        resetDb();
         createTestDb();
         const user = await request.post('/api/users/create').send({
         first_name: 'user1',
@@ -36,6 +37,14 @@ describe('Order Routes Suite', () => {
         const response = await request.get('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     })
+    it('6-/api/orders:id/products should return the products within an order', async () => {
+        const test = {
+            quantity: 5,
+            productId: '1'
+        }
+        const response = await request.post('/api/orders/1/products').set('Authorization', `Bearer ${token}`);
+        expect(response.status).toBe(201);
+    })
     it('4-api/orders/:id should edit the orders', async () => {
         const test = {
             status: 'complete',
@@ -47,13 +56,5 @@ describe('Order Routes Suite', () => {
     it('5-api/orders/:id should delete the order', async () => {
         const response = await request.delete('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
-    })
-    it('6-/api/orders:id/products should return the products within an order', async () => {
-        const test = {
-            quantity: 5,
-            productId: 1
-        }
-        const response = await request.post('/api/orders/1/products').set('Authorization', `Bearer ${token}`);
-        expect(response.status).toBe(201);
     })
 })
