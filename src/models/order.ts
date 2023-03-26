@@ -100,4 +100,32 @@ export class OrderStore {
             throw new Error(`Could not add product ${productId} to order ${orderId}: ${err}`)
         }
     }
+    async showOrderProducts(orderId: string): Promise<OrderProducts[]> {
+        try{
+            // @ts-ignore
+            const conn = await client.connect();
+            const sql = 'SELECT * FROM order_products WHERE order_id = ($1)';
+            const result = await conn.query(sql, [orderId]);
+            conn.release();
+            return result.rows;
+        }
+        catch (err){
+            throw new Error(`Could not get order products: ${err}`);
+        }
+    }
+    async deleteOrderProduct(orderId: string, productId: string): Promise<OrderProducts> {
+        try{
+            // @ts-ignore
+            const conn = await client.connect();
+            const sql = 'DELETE FROM order_products WHERE order_id = ($1) AND product_id = ($2)';
+            const result = await conn.query(sql, [orderId, productId]);
+            conn.release();
+            return result.rows[0];
+        }
+        catch (err){
+            throw new Error(`Could not delete product ${productId} from order ${orderId}: ${err}`);
+        }
+    }
+    
+
 }

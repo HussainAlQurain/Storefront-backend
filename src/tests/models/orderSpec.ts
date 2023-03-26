@@ -88,7 +88,7 @@ describe('Order Model Suite', () => {
 
         await store.addProductToOrder(5, oId, pId);
         await store.addProductToOrder(5, oId, pId2);
-        await store.removeProductFromOrder(oId, pId);
+        await store.deleteOrderProduct(oId, pId);
         const result = await store.showOrderProducts(oId);
         expect(result.length).toEqual(1);
         expect(result[0]).toEqual({ id: 2, quantity: 5, order_id: '1', product_id: '2'});

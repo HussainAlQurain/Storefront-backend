@@ -19,7 +19,7 @@ describe('Order Routes Suite', () => {
     afterAll(() => {
         resetDb();
     })
-    it('api/orders/create should return a newly created order', async () => {
+    it('1-api/orders/create should return a newly created order', async () => {
         const test = {
             status: 'active',
             user_id: 1
@@ -28,15 +28,15 @@ describe('Order Routes Suite', () => {
         expect(response.status).toBe(201);
         expect(response.body).toEqual({id: 1, status: 'active', user_id: '1'});
     })
-    it('api/orders should return all orders', async () => {
+    it('2-api/orders should return all orders', async () => {
         const response = await request.get('/api/orders/user_id/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     })
-    it('api/orders/:id should return the order', async () => {
+    it('3-api/orders/:id should return the order', async () => {
         const response = await request.get('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     })
-    it('api/orders/:id should edit the orders', async () => {
+    it('4-api/orders/:id should edit the orders', async () => {
         const test = {
             status: 'complete',
             user_id: 1,
@@ -44,11 +44,11 @@ describe('Order Routes Suite', () => {
         const response = await request.put('/api/orders/1').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
     })
-    it('api/orders/:id should delete the order', async () => {
+    it('5-api/orders/:id should delete the order', async () => {
         const response = await request.delete('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     })
-    it('/api/orders:id/products should return the products within an order', async () => {
+    it('6-/api/orders:id/products should return the products within an order', async () => {
         const test = {
             quantity: 5,
             productId: 1
