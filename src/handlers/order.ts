@@ -64,4 +64,31 @@ export class OrderHandler {
             res.status(400).json(err);
         }
     }
+    async showOrderProducts(req: Request, res: Response){
+        try{
+            const order = await store.showOrderProducts(req.params.orderId);
+            res.status(200).json(order);
+        }
+        catch (err){
+            res.status(400).json(err);
+        }
+    }
+    async removeProductfromOrder(req: Request, res: Response){
+        try{
+            const order = await store.removeProductfromOrder(req.params.orderId, req.params.productId);
+            res.status(200).json(order);
+        }
+        catch (err){
+            res.status(400).json(err);
+        }
+    }
+    async deleteOrderProducts(req: Request, res: Response){
+        try{
+            const order = await store.deleteOrderProducts(req.params.orderId);
+            res.status(200).json(order);
+        }
+        catch (err){
+            res.status(400).json(err);
+        }
+    }
 }

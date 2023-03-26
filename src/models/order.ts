@@ -15,6 +15,7 @@ export type OrderProducts = {
 }
 
 export class OrderStore {
+    // Orders
     async indexOrders(userId: number): Promise<Order[]> {
         try {
             // @ts-ignore
@@ -81,6 +82,7 @@ export class OrderStore {
             throw new Error(`Could not delete order: ${err}`);
         }
     }
+    // Order Products
     async addProductToOrder(quantity: number, orderId: string, productId: string): Promise<OrderProducts[]> {
         try{
             // @ts-ignore
@@ -113,7 +115,7 @@ export class OrderStore {
             throw new Error(`Could not get order products: ${err}`);
         }
     }
-    async deleteOrderProduct(orderId: string, productId: string): Promise<OrderProducts> {
+    async removeProductfromOrder(orderId: string, productId: string): Promise<OrderProducts> {
         try{
             // @ts-ignore
             const conn = await client.connect();
@@ -126,6 +128,18 @@ export class OrderStore {
             throw new Error(`Could not delete product ${productId} from order ${orderId}: ${err}`);
         }
     }
-    
+    async deleteOrderProducts(orderId: string): Promise<OrderProducts> {
+        try{
+            // @ts-ignore
+            const conn = await client.connect();
+            const sql = 'DELETE FROM order_products WHERE order_id = ($1)';
+            const result = await conn.query(sql, [orderId]);
+            conn.release();
+            return result.rows[0];
+        }
+        catch (err){
+            throw new Error(`Could not delete order products: ${err}`);
+        }
+    }
 
 }
