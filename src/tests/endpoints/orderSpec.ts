@@ -53,8 +53,13 @@ describe('Order Routes Suite', () => {
         const response = await request.put('/api/orders/1').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
     })
-    it('5-api/orders/:id should delete the order', async () => {
+    it('5-should delete complete order products', async () => {
+        const response = await request.delete('/api/orders/orderId').send({orderId: 1}).set('Authorization', `Bearer ${token}`);
+        expect(response.status).toBe(200);
+      });
+    it('6-api/orders/:id should delete the order', async () => {
         const response = await request.delete('/api/orders/1').set('Authorization', `Bearer ${token}`);
+        console.log(response.body);
         expect(response.status).toBe(200);
     })
 })

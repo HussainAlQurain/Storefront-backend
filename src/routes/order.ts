@@ -5,12 +5,13 @@ const OrderRouter = Router();
 const Handler = new OrderHandler();
 
 OrderRouter.use(verifyToken);
-
+//order
 OrderRouter.get('/user_id/:user_id', Handler.index);
 OrderRouter.get('/:id', Handler.show);
 OrderRouter.post('/create', Handler.create);
 OrderRouter.put('/:id', Handler.update);
 OrderRouter.delete('/:id', Handler.destroy);
+//order products
 OrderRouter.post('/:orderId/products', Handler.addProductToOrder);
 OrderRouter.get('/:orderId/products', Handler.showOrderProducts);
 OrderRouter.post('/:orderId/products/:productId', Handler.removeProductfromOrder);
