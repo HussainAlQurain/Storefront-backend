@@ -37,15 +37,23 @@ describe('Order Routes Suite', () => {
         const response = await request.get('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     })
-    it('6-/api/orders:id/products should return the products within an order', async () => {
-        const test = {
+    it('4-/api/orders/:id/products should return the products within an order', async () => {
+        const orderP = {
             quantity: 5,
             productId: '1'
         }
-        const response = await request.post('/api/orders/1/products').set('Authorization', `Bearer ${token}`);
+        const p = {
+            name: 'coffee',
+            price: 5,
+            url: '',
+            description: ''
+        }
+        const product = await request.post('/api/products/create').set('Authorization', `Bearer ${token}`).send(p);
+
+        const response = await request.post('/api/orders/1/products').send(orderP).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(201);
     })
-    it('4-api/orders/:id should edit the orders', async () => {
+    it('5-api/orders/:id should edit the orders', async () => {
         const test = {
             status: 'complete',
             user_id: 1,
@@ -53,13 +61,13 @@ describe('Order Routes Suite', () => {
         const response = await request.put('/api/orders/1').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
     })
-    it('5-should delete complete order products', async () => {
+    it('6-should delete complete order products', async () => {
+        const products = await request.get('/api/orders/1/products').set('Authorization', `Bearer ${token}`);
         const response = await request.delete('/api/orders/orderId').send({orderId: 1}).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
       });
-    it('6-api/orders/:id should delete the order', async () => {
+    it('7-api/orders/:id should delete the order', async () => {
         const response = await request.delete('/api/orders/1').set('Authorization', `Bearer ${token}`);
-        console.log(response.body);
         expect(response.status).toBe(200);
     })
 })
