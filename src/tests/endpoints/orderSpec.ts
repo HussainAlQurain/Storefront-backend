@@ -53,7 +53,12 @@ describe('Order Routes Suite', () => {
         const response = await request.post('/api/orders/1/products').send(orderP).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(201);
     })
-    it('5-api/orders/:id should edit the orders', async () => {
+    it('5-api/orders:orderId/products/:productId should update the quantity of a product in an order', async () => {
+        const quantity = 10;
+        const response = await request.put('/api/orders/1/products/1').send({quantity}).set('Authorization', `Bearer ${token}`);
+        expect(response.status).toBe(201);
+    })
+    it('6-api/orders/:id should edit the orders', async () => {
         const test = {
             status: 'complete',
             user_id: 1,
@@ -61,12 +66,12 @@ describe('Order Routes Suite', () => {
         const response = await request.put('/api/orders/1').set('Authorization', `Bearer ${token}`).send(test);
         expect(response.status).toBe(201);
     })
-    it('6-api/orders/order/orderid should delete complete order products', async () => {
+    it('7-api/orders/order/orderid should delete complete order products', async () => {
         const products = await request.get('/api/orders/1/products').set('Authorization', `Bearer ${token}`);
         const response = await request.delete('/api/orders/order/orderid').send({orderId: 1}).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
       });
-    it('7-api/orders/:id should delete the order', async () => {
+    it('8-api/orders/:id should delete the order', async () => {
         const response = await request.delete('/api/orders/1').set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     })
