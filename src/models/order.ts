@@ -141,5 +141,18 @@ export class OrderStore {
             throw new Error(`Could not delete order products: ${err}`);
         }
     }
+    async updateOrderProductQuantity(quantity: number, orderId: string, productId: string): Promise<OrderProducts> {
+        try{
+            // @ts-ignore
+            const conn = await client.connect();
+            const sql = 'UPDATE order_products SET quantity = ($1) WHERE order_id = ($2) AND product_id = ($3)';
+            const result = await conn.query(sql, [quantity, orderId, productId]);
+            conn.release();
+            return result.rows[0];
+        }
+        catch (err){
+            throw new Error(`Could not update order product quantity: ${err}`);
+        }
+    }
 
 }
