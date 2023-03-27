@@ -94,7 +94,7 @@ export class OrderHandler {
     async updateOrderProduct(req: Request, res: Response){
         try{
             const order = await store.updateOrderProductQuantity(req.body.quantity, req.params.orderId, req.params.productId);
-            res.status(200).json(order);
+            res.status(201).json(order);
         }
         catch (err){
             res.status(400).json(err);
