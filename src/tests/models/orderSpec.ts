@@ -139,7 +139,7 @@ describe('Order Model Suite', () => {
         resetDb();
         createTestDb();
     })
-    fit('Expects store.updateOrderProductQuantity to update quantity in order_products table', async () => {
+    it('Expects store.updateOrderProductQuantity to update quantity in order_products table', async () => {
         resetDb();
         createTestDb();
 
@@ -153,12 +153,12 @@ describe('Order Model Suite', () => {
         const pId2: string = testProduct2.id?.toString() ?? '2';
 
         await store.addProductToOrder(5, oId, pId);
-        await store.addProductToOrder(5, oId, pId2);
+        await store.addProductToOrder(7, oId, pId2);
         await store.updateOrderProductQuantity(10, oId, pId);
         const result = await store.showOrderProducts(oId);
         expect(result.length).toEqual(2);
         expect(result[0]).toEqual({ id: 1, quantity: 10, order_id: '1', product_id: '1'});
-        expect(result[1]).toEqual({ id: 2, quantity: 5, order_id: '1', product_id: '2'});
+        expect(result[1]).toEqual({ id: 2, quantity: 7, order_id: '1', product_id: '2'});
         resetDb();
         createTestDb();
     })

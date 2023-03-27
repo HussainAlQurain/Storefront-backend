@@ -106,7 +106,7 @@ export class OrderStore {
         try{
             // @ts-ignore
             const conn = await client.connect();
-            const sql = 'SELECT * FROM order_products WHERE order_id = ($1)';
+            const sql = 'SELECT * FROM order_products WHERE order_id = ($1) ORDER BY id ASC';
             const result = await conn.query(sql, [orderId]);
             conn.release();
             return result.rows;
@@ -145,7 +145,7 @@ export class OrderStore {
         try{
             // @ts-ignore
             const conn = await client.connect();
-            const sql = 'UPDATE order_products SET quantity = ($1) WHERE order_id = ($2) AND product_id = ($3)';
+            const sql = 'UPDATE order_products SET quantity = ($1) WHERE order_id = ($2) AND product_id = ($3) RETURNING *';
             const result = await conn.query(sql, [quantity, orderId, productId]);
             conn.release();
             return result.rows[0];
