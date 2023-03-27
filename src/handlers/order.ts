@@ -84,7 +84,7 @@ export class OrderHandler {
     }
     async deleteOrderProducts(req: Request, res: Response){
         try{
-            const order = await store.deleteOrderProducts(req.body.orderId.toString());
+            const order = await store.deleteOrderProducts(req.body.orderId);
             res.status(200).json(order);
         }
         catch (err){

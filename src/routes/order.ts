@@ -15,6 +15,6 @@ OrderRouter.delete('/:id', Handler.destroy);
 OrderRouter.post('/:orderId/products', Handler.addProductToOrder);
 OrderRouter.get('/:orderId/products', Handler.showOrderProducts);
 OrderRouter.post('/:orderId/products/:productId', Handler.removeProductfromOrder);
-OrderRouter.delete('/orderId', Handler.deleteOrderProducts);
+OrderRouter.delete('/order/orderId', Handler.deleteOrderProducts);
 
 export default OrderRouter;
