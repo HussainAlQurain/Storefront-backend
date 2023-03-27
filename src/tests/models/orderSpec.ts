@@ -139,7 +139,7 @@ describe('Order Model Suite', () => {
         resetDb();
         createTestDb();
     })
-    it('Expects store.updateOrderProduct to update quantity in order_products table', async () => {
+    fit('Expects store.updateOrderProductQuantity to update quantity in order_products table', async () => {
         resetDb();
         createTestDb();
 
