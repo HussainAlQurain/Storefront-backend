@@ -43,8 +43,11 @@ Run the tests by:
 - yarn test
 
 Run the migrations by:
+
 db-migrate up
+
 Run db-migrate up again to fix 1 migration not running from the start.
+
 db-migrate up 
 
 Run the server by:
